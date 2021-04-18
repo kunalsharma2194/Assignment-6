@@ -1,19 +1,16 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const {
+    getBlogs,
+    getBlog
+} = require('../controllers/blogs');
+const Blogs = require('../models/blogs');
 
-const blogSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    snippet: {
-        type: String
-    },
-    content: {
-        type: String,
-        required: true
-    }
-}, {
-    timestamps: true
-});
+const router = express.Router();
 
-module.exports = mongoose.model('Blogs', blogSchema);
+router.get('/', getBlogs);
+router.get('/blog/:id', getBlog);
+router.get('/about', (_req, res) => {
+    res.render('blogs/about')
+})
+
+module.exports = router;
